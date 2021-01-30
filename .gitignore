@@ -4,6 +4,10 @@ sdkconfig
 # Exclude Filesystem Artifacts
 .DS_Store
 
+#Exclude the Build Dir
+build
+build/*
+
 # Prerequisites
 *.d
 
