@@ -1,0 +1,27 @@
+menu "Wifi + OTA Configuration"
+
+config PROJECT_NAME
+    string "PROJECT_NAME"
+    default "MyProject"
+    help
+      The Name of the application in the JSON to check for OTA Updates.
+
+config WIFI_SSID
+    string "WiFi SSID"
+    default "myssid"
+    help
+	SSID (network name) for the example to connect to.
+
+config WIFI_PASSWORD
+    string "WiFi Password"
+    default "mypassword"
+    help
+	    WiFi password (WPA or WPA2) for the example to use.
+
+config FIRMWARE_UPGRADE_JSON_URL
+    string "Firmware JSON URL (Don't forget the File Path)"
+    default "https://10.0.0.8/ota/firmware.json"
+    help
+        URL of server which hosts the firmware JSON file
+        image.
+endmenu

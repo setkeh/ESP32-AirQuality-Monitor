@@ -1,0 +1,1 @@
+cmd='/usr/bin/cmake;-DSDKCONFIG=/home/setkeh/git/ESP32-Template-Project/sdkconfig;-DIDF_PATH=/opt/esp-idf;-DIDF_TARGET=esp32;-DPYTHON_DEPS_CHECKED=1;-DPYTHON=/opt/esp-idf/tools/python_env/idf4.3_py3.8_env/bin/python;-DEXTRA_COMPONENT_DIRS=/opt/esp-idf/components/bootloader;-DLEGACY_INCLUDE_COMMON_HEADERS=;-GNinja;<SOURCE_DIR><SOURCE_SUBDIR>'

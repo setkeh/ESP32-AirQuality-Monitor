@@ -1,3 +1,9 @@
+# Exclude Wifi Credentials
+sdkconfig
+
+# Exclude Filesystem Artifacts
+.DS_Store
+
 # Prerequisites
 *.d
 
