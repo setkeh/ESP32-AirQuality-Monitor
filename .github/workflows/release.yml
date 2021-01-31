@@ -1,0 +1,29 @@
+# This is a basic workflow to help you get started with Actions
+
+name: CI
+
+# Controls when the action will run. 
+on:
+  release:
+    types: [published]
+
+# A workflow run is made up of one or more jobs that can run sequentially or in parallel
+jobs:
+  # This workflow contains a single job called "build"
+  build:
+    # The type of runner that the job will run on
+    runs-on: ubuntu-latest
+
+    # Steps represent a sequence of tasks that will be executed as part of the job
+    steps:
+      # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
+      - uses: actions/checkout@v2
+
+      - name: Espressif IDF Build
+        uses: sebastianPsm/esp-idf-ci-action@1
+      
+      - name: Bump Webserver Release Version
+        run: jq '."ESP32-Template-Project"."version"=${{ github.event.release.tag_name }}' firmware.json > firmware.json
+        
+      - name: Copy the Build into the OTA Directory
+        run: build/ESP32-TEMPLATE-PROJECT.bin :/opt/containers/nginx/ESP32-TEMPLATE-PROJECT.bin
