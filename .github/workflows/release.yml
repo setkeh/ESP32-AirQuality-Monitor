@@ -1,0 +1,41 @@
+# This is a basic workflow to help you get started with Actions
+
+name: CI
+
+# Controls when the action will run. 
+on:
+  release:
+    types: [published]
+
+# A workflow run is made up of one or more jobs that can run sequentially or in parallel
+jobs:
+  # This workflow contains a single job called "build"
+  build:
+    # The type of runner that the job will run on
+    runs-on: self-hosted
+
+    # Steps represent a sequence of tasks that will be executed as part of the job
+    steps:
+      # There is an Issue with the action thts causing permissions issues so adding a shitty hack to get around it for now.
+      - name: Bump Build Directory Permissions
+        run: sudo chmod -R 0777 .
+        
+      # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
+      - uses: actions/checkout@v2
+
+      - name: Espressif IDF Build
+        uses: sebastianPsm/esp-idf-ci-action@1
+      
+      # There is an Issue with the action thts causing permissions issues so adding a shitty hack to get around it for now.
+      - name: Bump Build Directory Permissions
+        run: sudo chmod -R 0777 .
+        
+      - name: Copy the Build into the OTA Directory
+        run: cp build/ESP32-TEMPLATE-PROJECT.bin /opt/containers/nginx/ESP32-TEMPLATE-PROJECT.bin
+      
+      # JQ is leaving the file empty when you pipe out to itself so adding a second file and them using mv to fix the issue.
+      - name: Bump Webserver Release Version JSON
+        run: jq '."ESP32-Template-Project"."version"=${{ github.event.release.tag_name }}' /opt/containers/nginx/firmware.json > /opt/containers/nginx/firmware1.json
+      
+      - name: Move the Json Release file update
+        run: mv /opt/containers/nginx/firmware1.json /opt/containers/nginx/firmware.json
