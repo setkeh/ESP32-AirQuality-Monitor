@@ -99,6 +99,6 @@ void check_update_task(void *pvParameter) {
 		// cleanup
 		esp_http_client_cleanup(client);
 		printf("\n");
-        vTaskDelay(10000 / portTICK_PERIOD_MS);
+        vTaskDelay(120000 / portTICK_PERIOD_MS);
     }
 }
