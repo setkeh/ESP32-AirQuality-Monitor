@@ -22,8 +22,14 @@ jobs:
 
     # Steps represent a sequence of tasks that will be executed as part of the job
     steps:
+      # There is an Issue with the action thts causing permissions issues so adding a shitty hack to get around it for now.
+      - name: Bump Build Directory Permissions
+        run: sudo chmod -R 0777 .
       - name: Checkout the repo
         uses: actions/checkout@v2
       - name: espressif idf build
         uses: sebastianPsm/esp-idf-ci-action@1
+      # There is an Issue with the action thts causing permissions issues so adding a shitty hack to get around it for now.
+      - name: Bump Build Directory Permissions
+        run: sudo chmod -R 0777 .
 
