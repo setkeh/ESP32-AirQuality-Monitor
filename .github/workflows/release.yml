@@ -34,4 +34,4 @@ jobs:
         run: jq '."ESP32-Template-Project"."version"=${{ github.event.release.tag_name }}' /opt/containers/nginx/firmware.json > /opt/containers/nginx/firmware.json
         
       - name: Copy the Build into the OTA Directory
-        run: build/ESP32-TEMPLATE-PROJECT.bin /opt/containers/nginx/ESP32-TEMPLATE-PROJECT.bin
+        run: cp build/ESP32-TEMPLATE-PROJECT.bin /opt/containers/nginx/ESP32-TEMPLATE-PROJECT.bin
