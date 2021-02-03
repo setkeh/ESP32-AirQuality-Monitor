@@ -42,4 +42,9 @@ billion ways you can acheive the same result.
 Dont forget to bump the firmware version variable in `ota.h` as if you do forget the ESP will end up in a boot loop as
 it will always think there is an ota update available (i havent figured out a better way to fix this yet) the solution
 to the issue though is to bump the version (e.g if you had version 0.1 on the esp and you released 0.2 and forgot to
-update ota.h you update ota.h to 1.3 and re release the repo at 0.3)
+update ota.h you update ota.h to 0.3 and re release the repo at 0.3)
+
+Another notable thing that might cause confusion is the jq command if you have your release version set to `1.0` in the
+json output the value for version will just be `1` which is an int not a float but thankfully the C logic is smart
+enough to know if you parse an int into a float it should continue to be a float and adds the decimal for you so it wont
+cause any drama.
