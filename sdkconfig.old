@@ -126,7 +126,7 @@ CONFIG_PARTITION_TABLE_MD5=y
 #
 # Wifi + OTA Configuration
 #
-CONFIG_PROJECT_NAME="MyProject"
+CONFIG_PROJECT_NAME="ESP32-Template-Project"
 CONFIG_WIFI_SSID="SETKEH"
 CONFIG_WIFI_PASSWORD="Amberjayde1"
 CONFIG_FIRMWARE_UPGRADE_JSON_URL="https://web.local.setkeh.com/firmware.json"
