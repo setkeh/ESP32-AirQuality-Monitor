@@ -159,8 +159,8 @@ void send_data_task(void *arg) {
 }
 
 void init_loki() {
-  ESP_LOGI("Initializing Loki Logging");
+  ESP_LOGI(TAG, "Initializing Loki Logging");
   data0_queue = xQueueCreate(45, sizeof(log_data_t));
   xTaskCreate(send_data_task, "send_data_task", 8192, NULL, 10, NULL);
-  ESP_LOGI("Loki Logging Initialized");
+  ESP_LOGI(TAG, "Loki Logging Initialized");
 }
