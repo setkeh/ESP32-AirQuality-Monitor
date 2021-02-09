@@ -1,5 +1,4 @@
 #include "loki.h"
-#include "store.h"
 
 #include "freertos/FreeRTOS.h"
 #include "freertos/task.h"
@@ -98,7 +97,7 @@ void send_data_task(void *arg) {
     .host = LOKI_HOST,
     .port = LOKI_PORT,
     .path = LOKI_PATH,
-    .transport_type = LOKI_TRANSPORT,
+    .transport_type = HTTP_TRANSPORT_OVER_TCP
   };
   if (strcmp(LOKI_USERNAME, "")) {
     http_config.auth_type = HTTP_AUTH_TYPE_BASIC;

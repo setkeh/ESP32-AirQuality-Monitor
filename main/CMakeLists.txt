@@ -1,4 +1,4 @@
-set(COMPONENT_SRCS "task.c" "ota.c" "wifi_functions.c" "main.c")
+set(COMPONENT_SRCS "utils.c" "serial.c" "loki.c" "task.c" "ota.c" "wifi_functions.c" "main.c")
 set(COMPONENT_ADD_INCLUDEDIRS ".")
 
 
