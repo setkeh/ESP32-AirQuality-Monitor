@@ -19,7 +19,13 @@
 #include "ota.h"
 #include "task.h"
 
+#include "loki.h"
+#include "serial.h"
+
 void app_main() {
+  init_loki();
+  init_serial();
+
 	gpio_pad_select_gpio(BLINK_GPIO);
   gpio_set_direction(BLINK_GPIO, GPIO_MODE_OUTPUT);
 
@@ -32,7 +38,7 @@ void app_main() {
 	wifi_initialise();
 	wifi_wait_connected();
 	printf("Connected to wifi network\n");
-	
+
 	// start the check update task
 	xTaskCreate(&check_update_task, "check_update_task", 8192, NULL, 5, NULL);
 }

@@ -25,3 +25,37 @@ config FIRMWARE_UPGRADE_JSON_URL
         URL of server which hosts the firmware JSON file
         image.
 endmenu
+
+menu "Grafana Loki Log Driver Configuration"
+
+config LOKI_USERNAME
+  string "LOKI USERNAME (optional)"
+  default "admin"
+  help
+    The Username of the User to log into the loki log service.
+
+config LOKI_PASSWORD
+  string "LOKI PASSWORD (optional)"
+  default "password"
+  help
+    The Loki Password to log into the loki log service
+
+config LOKI_HOST
+  string "LOKI HOST"
+  default "127.0.0.1"
+  help
+    The hostname / ip address of your loki instance.
+
+config LOKI_PORT
+  string "LOKI PORT"
+  default "3100"
+  help
+    The port you Loki instance is listening on.
+
+config LOKI_TRANSPORT
+  string "LOKI TRANSPORT"
+  default "HTTPS"
+  help
+    The transport type you loki server is listening for HTTPS or HTTP
+
+endmenu
