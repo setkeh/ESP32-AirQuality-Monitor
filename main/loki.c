@@ -27,7 +27,7 @@ esp_err_t _http_event_handle(esp_http_client_event_t *evt) {
       ESP_LOGE(TAG, "HTTP_EVENT_ERROR");
       break;
     case HTTP_EVENT_ON_CONNECTED:
-      ESP_LOGI(TAG, "HTTP_EVENT_ON_CONNECTED");
+      ESP_LOGD(TAG, "HTTP_EVENT_ON_CONNECTED");
       break;
     case HTTP_EVENT_HEADER_SENT:
       ESP_LOGD(TAG, "HTTP_EVENT_HEADER_SENT");
@@ -43,7 +43,7 @@ esp_err_t _http_event_handle(esp_http_client_event_t *evt) {
       ESP_LOGI(TAG, "HTTP_EVENT_ON_FINISH");
       break;
     case HTTP_EVENT_DISCONNECTED:
-      ESP_LOGI(TAG, "HTTP_EVENT_DISCONNECTED");
+      ESP_LOGD(TAG, "HTTP_EVENT_DISCONNECTED");
       break;
   }
   return ESP_OK;
@@ -62,10 +62,10 @@ void send_data(char *post_buff, esp_http_client_config_t *http_config) {
   len = esp_http_client_fetch_headers(client);
   status = esp_http_client_get_status_code(client);
   if (status != 204) {
-    ESP_LOGW(TAG, "POST body: %s", post_buff);
+    ESP_LOGD(TAG, "POST body: %s", post_buff);
     read_len = esp_http_client_read(client, post_buff, len);
     post_buff[read_len] = '\0';
-    ESP_LOGE(TAG, "%d: %s", status, read_len > 0 ? post_buff:"error");
+    ESP_LOGD(TAG, "%d: %s", status, read_len > 0 ? post_buff:"error");
   } else {
     ESP_LOGD(TAG, "Status = %d", status);
   }
@@ -97,7 +97,8 @@ void send_data_task(void *arg) {
     .host = LOKI_HOST,
     .port = LOKI_PORT,
     .path = LOKI_PATH,
-    .transport_type = HTTP_TRANSPORT_OVER_TCP
+    .cert_pem = (char *)server_cert_loki_pem_start, 
+    .transport_type = HTTP_TRANSPORT_OVER_SSL 
   };
   if (strcmp(LOKI_USERNAME, "")) {
     http_config.auth_type = HTTP_AUTH_TYPE_BASIC;
@@ -160,6 +161,7 @@ void send_data_task(void *arg) {
 
 void init_loki() {
   ESP_LOGI(TAG, "Initializing Loki Logging");
+  esp_log_level_set("loki", ESP_LOG_VERBOSE);
   data0_queue = xQueueCreate(45, sizeof(log_data_t));
   xTaskCreate(send_data_task, "send_data_task", 8192, NULL, 10, NULL);
   ESP_LOGI(TAG, "Loki Logging Initialized");

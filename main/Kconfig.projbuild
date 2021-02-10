@@ -47,7 +47,7 @@ config LOKI_HOST
     The hostname / ip address of your loki instance.
 
 config LOKI_PORT
-  string "LOKI PORT"
+  int "LOKI PORT"
   default "3100"
   help
     The port you Loki instance is listening on.

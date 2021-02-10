@@ -41,13 +41,13 @@ void check_update_task(void *pvParameter) {
 	
 	while(1) {
         
-		ESP_LOGI(TAG, "Looking for a new firmware...\n");
+		ESP_LOGI(TAG, "Looking for a new firmware...");
 	
 		// configure the esp_http_client
 		esp_http_client_config_t config = {
         .url = UPDATE_JSON_URL,
         .event_handler = _http_event_handler,
-        .cert_pem = (char *)server_cert_pem_start,
+        .cert_pem = (char *)server_cert_ota_pem_start,
 		};
 		esp_http_client_handle_t client = esp_http_client_init(&config);
 	
@@ -57,7 +57,7 @@ void check_update_task(void *pvParameter) {
 			
 			// parse the json file	
 			cJSON *json = cJSON_Parse(rcv_buffer);
-			if(json == NULL) ESP_LOGI(TAG, "downloaded file is not a valid json, aborting...\n");
+			if(json == NULL) ESP_LOGI(TAG, "downloaded file is not a valid json, aborting...");
 			else {
         cJSON *project = cJSON_GetObjectItem(json, PROJECT_NAME);
 				cJSON *version = cJSON_GetObjectItemCaseSensitive(project, "version");
@@ -67,36 +67,36 @@ void check_update_task(void *pvParameter) {
         //printf(file->valuestring);
 				
 				// check the version
-				if(!cJSON_IsNumber(version)) ESP_LOGI(TAG, "unable to read new version, aborting...\n");
+				if(!cJSON_IsNumber(version)) ESP_LOGI(TAG, "unable to read new version, aborting...");
 				else {
 					
 					double new_version = version->valuedouble;
 					if(new_version > FIRMWARE_VERSION) {
 						
-						ESP_LOGI(TAG, "current firmware version (%.1f) is lower than the available one (%.1f), upgrading...\n", FIRMWARE_VERSION, new_version);
+						ESP_LOGI(TAG, "current firmware version (%.1f) is lower than the available one (%.1f), upgrading...", FIRMWARE_VERSION, new_version);
 						if(cJSON_IsString(file) && (file->valuestring != NULL)) {
-							ESP_LOGI(TAG, "downloading and installing new firmware (%s)...\n", file->valuestring);
+							ESP_LOGI(TAG, "downloading and installing new firmware (%s)...", file->valuestring);
 							
 							esp_http_client_config_t ota_client_config = {
 								.url = file->valuestring,
-								.cert_pem = (char *)server_cert_pem_start,
+								.cert_pem = (char *)server_cert_ota_pem_start,
 							};
 							esp_err_t ret = esp_https_ota(&ota_client_config);
 							if (ret == ESP_OK) {
-								ESP_LOGI(TAG, "OTA OK, restarting...\n");
+								ESP_LOGI(TAG, "OTA OK, restarting...");
 								esp_restart();
 							} else {
-								ESP_LOGI(TAG, "OTA failed...\n");
+								ESP_LOGI(TAG, "OTA failed...");
 							}
 						}
-						else ESP_LOGI(TAG, "unable to read the new file name, aborting...\n");
+						else ESP_LOGI(TAG, "unable to read the new file name, aborting...");
 					}
-					else ESP_LOGI(TAG, "current firmware version (%.1f) is greater or equal to the available one (%.1f), nothing to do...\n", FIRMWARE_VERSION, new_version);
+					else ESP_LOGI(TAG, "current firmware version (%.1f) is greater or equal to the available one (%.1f), nothing to do...", FIRMWARE_VERSION, new_version);
 				}
 			}
 		}
 		else {
-			ESP_LOGI(TAG, "unable to download the json file, aborting...\n");
+			ESP_LOGI(TAG, "unable to download the json file, aborting...");
 		}
 		
 		// cleanup

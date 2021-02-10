@@ -25,8 +25,8 @@ static void uart_event_task(void *pvParameters) {
     memset(&out_line, 0, sizeof(log_data_t));
     int len = uart_read_bytes(EX_UART_NUM, dtmp, RD_BUF_SIZE, 20 / portTICK_RATE_MS);
     if (!len) continue;
-    ESP_LOGI(TAG, "[UART DATA]: %d", len);
-    ESP_LOGV(TAG, "data: %s", dtmp);
+    ESP_LOGD(TAG, "[UART DATA]: %d", len);
+    ESP_LOGD(TAG, "data: %s", dtmp);
     gettimeofday(&out_line.tv, NULL);
     char delim[] = "\r\n";
     char *ptr = strtok((char *)dtmp, delim);
@@ -64,6 +64,7 @@ static void uart_event_task(void *pvParameters) {
 }
 
 void init_serial() {
+  ESP_LOGI(TAG, "Initializing Serial Log Functionality");
   // configure UART
   uart_config_t uart_config = {
     .baud_rate = 115200,
@@ -77,4 +78,5 @@ void init_serial() {
   ESP_ERROR_CHECK(uart_driver_install(EX_UART_NUM, uart_buffer_size, 0, 0, NULL, 0));
 
   xTaskCreate(uart_event_task, "uart_event_task", 4096, NULL, 12, NULL);
+  ESP_LOGI(TAG, "Serial Log Functionality Initialized");
 }

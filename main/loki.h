@@ -6,6 +6,9 @@
 
 #include <sys/time.h>
 
+extern const uint8_t server_cert_loki_pem_start[] asm("_binary_ca_cert_loki_pem_start");
+extern const uint8_t server_cert_loki_pem_end[] asm("_binary_ca_cert_loki_pem_end");
+
 #define LOKI_PATH "/loki/api/v1/push"
 #define EMITTER_LABEL "esploki"
 #define JOB_LABEL "uarttail"
