@@ -4,7 +4,7 @@ extern const uint8_t server_cert_ota_pem_start[] asm("_binary_ca_cert_ota_pem_st
 extern const uint8_t server_cert_ota_pem_end[] asm("_binary_ca_cert_ota_pem_end");
 
 #define PROJECT_NAME      CONFIG_PROJECT_NAME
-#define FIRMWARE_VERSION	1.9
+#define FIRMWARE_VERSION	2.0
 #define UPDATE_JSON_URL		CONFIG_FIRMWARE_UPGRADE_JSON_URL
 
 // receive buffer
