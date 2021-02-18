@@ -111,6 +111,7 @@ void check_update_task(void *pvParameter) {
           vTaskDelay(120000 / portTICK_PERIOD_MS);
       }
       else {
+        ESP_LOGI(TAG, "ESP OTA MbedTLS has failed 5 Times Restarting ESP")
         esp_restart();
       }
   }
